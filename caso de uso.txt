@@ -1,0 +1,5 @@
+.associar tarefa a usuario.
+.CRUD tarefa.
+.CRUD usuario.
+.alterar status tarefa.
+.
