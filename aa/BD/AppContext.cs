@@ -13,9 +13,11 @@ namespace aa.BD
 
         public AppContext() : base("AppContext")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppContext, Migrations.Configuration>());
         }
 
         public DbSet<Tarefa> Tarefas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
