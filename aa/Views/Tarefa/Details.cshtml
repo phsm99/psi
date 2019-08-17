@@ -30,8 +30,18 @@
             @Html.DisplayNameFor(model => model.DataCriacao)
         </dt>
 
+        @{
+            string data = Model.DataCriacao.ToShortDateString();
+        }
         <dd>
-            @Html.DisplayFor(model => model.DataCriacao)
+            @Html.DisplayFor(model => data)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usuario.Nome)
         </dd>
 
     </dl>

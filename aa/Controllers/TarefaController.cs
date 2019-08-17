@@ -36,6 +36,16 @@ namespace aa.Controllers
             return View(tarefa);
         }
 
+        public void CriarSelectListResponsaveis()
+        {
+            var Usuarios = db.Usuarios.ToList();
+            List<SelectListItem> lista = new List<SelectListItem>();
+            foreach (var usu in Usuarios)
+            {
+                lista.Add(new SelectListItem { Value = usu.Id.ToString(), Text = usu.Nome });
+            }
+            ViewBag.Responsaveis = lista;
+        }
         // GET: Tarefa/Create
         public ActionResult Create()
         {
@@ -47,10 +57,12 @@ namespace aa.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Titulo,Descricao,DataCriacao")] Tarefa tarefa)
+        public ActionResult Create(Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
+                tarefa.DataCriacao = DateTime.Now;
+                tarefa.DataAlteracao = DateTime.Now;
                 db.Tarefas.Add(tarefa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -71,6 +83,8 @@ namespace aa.Controllers
             {
                 return HttpNotFound();
             }
+
+            CriarSelectListResponsaveis();
             return View(tarefa);
         }
 
@@ -79,10 +93,11 @@ namespace aa.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Titulo,Descricao,DataCriacao")] Tarefa tarefa)
+        public ActionResult Edit(Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
+                tarefa.DataAlteracao = DateTime.Now;
                 db.Entry(tarefa).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

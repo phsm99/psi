@@ -26,6 +26,19 @@
             @Html.DisplayFor(model => model.Sobrenome)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarefas)
+        </dt>
+
+        @foreach (var tar in Model.Tarefas)
+        {
+            <dd>
+                @Html.ActionLink(tar.Titulo, "Details", "Tarefa", new { id = tar.Id }, null)
+            </dd>
+        }
+
+
+
     </dl>
 </div>
 <p>
