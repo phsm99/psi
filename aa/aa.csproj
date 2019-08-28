@@ -186,6 +186,7 @@
     <Compile Include="BD\AppContext.cs" />
     <Compile Include="BD\AppInitializer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EquipeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
@@ -199,6 +200,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Equipe.cs" />
+    <Compile Include="Models\EquipeUsuario.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tarefa.cs" />
@@ -275,6 +278,11 @@
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Usuario\Edit.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Equipe\Create.cshtml" />
+    <Content Include="Views\Equipe\Delete.cshtml" />
+    <Content Include="Views\Equipe\Details.cshtml" />
+    <Content Include="Views\Equipe\Edit.cshtml" />
+    <Content Include="Views\Equipe\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908122249040_InitialCreate.resx">

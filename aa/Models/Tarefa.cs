@@ -6,6 +6,12 @@ using System.Web;
 
 namespace aa.Models
 {
+    public enum Status
+    {
+        NãoAtribuida,
+        EmAndamento,
+        Finalizado
+    }
     public class Tarefa
     {
         public int Id { get; set; }
@@ -17,6 +23,7 @@ namespace aa.Models
         [DisplayName("Responsável")]
         public virtual Usuario Usuario { get; set; }
 
+        public Status Status { get; set; }
 
     }
 }
