@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using aa.Models;
+@{
+    Usuario usuario = null;
+    if (Session["Usuario"] != null)
+    {
+        usuario = (Usuario)Session["Usuario"];
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -19,14 +28,30 @@
                 </button>
                 @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Tarefa", "Index", "Tarefa")</li>
-                    <li>@Html.ActionLink("Usuarios", "Index", "Usuario")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+            @if (usuario != null)
+            {
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Tarefa", "Index", "Tarefa")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "Usuario")</li>
+                    </ul>
+                    @*@Html.Partial("_LoginPartial")*@
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        Html.AntiForgeryToken();
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + usuario.Nome + "!", "Edit", "Usuario", routeValues: new { id = usuario.Id }, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Log off", "Logoff", "Account")
+                            </li>
+                        </ul>
+                    }
+                </div>
+            }
         </div>
     </div>
     <div class="container body-content">

@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace aa.Controllers
 {
-    public class HomeController : Controller
+    [RedirectingAction]
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {

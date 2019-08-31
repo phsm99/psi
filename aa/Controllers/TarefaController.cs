@@ -11,6 +11,7 @@ using aa.Models;
 
 namespace aa.Controllers
 {
+    [RedirectingAction]
     public class TarefaController : Controller
     {
         private AppContext db = new AppContext();
