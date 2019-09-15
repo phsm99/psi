@@ -37,9 +37,27 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="javascript:ExcluirUsuario(@item.Id)">Delete</a>
         </td>
     </tr>
 }
 
 </table>
+
+
+
+<script>
+    function ExcluirUsuario(UsuarioId) {
+        var r = confirm("Deseja realmente excluir esse usuário?");
+        if (r == true) {
+            $.ajax({
+                url: "/Usuario/DeleteConfirmed/" + UsuarioId,
+                method: "POST",
+                success: function () {
+                    window.location.reload();
+                }
+            });
+
+        } 
+    }
+</script>

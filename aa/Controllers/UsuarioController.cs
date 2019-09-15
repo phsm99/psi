@@ -107,11 +107,16 @@ namespace aa.Controllers
         }
 
         // POST: Usuario/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
             Usuario usuario = db.Usuarios.Find(id);
+            if(usuario == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             db.Usuarios.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");

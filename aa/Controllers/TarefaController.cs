@@ -1,13 +1,11 @@
-﻿using System;
+﻿using aa.BD;
+using aa.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using aa.BD;
-using aa.Models;
 
 namespace aa.Controllers
 {
@@ -122,11 +120,16 @@ namespace aa.Controllers
         }
 
         // POST: Tarefa/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
             Tarefa tarefa = db.Tarefas.Find(id);
+            if (tarefa == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             db.Tarefas.Remove(tarefa);
             db.SaveChanges();
             return RedirectToAction("Index");
