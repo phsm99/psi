@@ -2,13 +2,25 @@
 
 @{
     ViewBag.Title = "Index";
+    aa.Models.Usuario usuario = null;
+    if (Session["Usuario"] != null)
+    {
+        usuario = (aa.Models.Usuario)Session["Usuario"];
+    }
 }
+
+
+
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (usuario != null && usuario.Cargo == aa.Models.Usuario.Tipo.Lider)
+{
+    <p>
+        @Html.ActionLink("Criar Usuário", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -20,27 +32,41 @@
         <th>
             @Html.DisplayNameFor(model => model.Sobrenome)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cargo)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sobrenome)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            <a href="javascript:ExcluirUsuario(@item.Id)">Delete</a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sobrenome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cargo)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.Id })
+
+                @if (usuario != null && usuario.Cargo == aa.Models.Usuario.Tipo.Lider)
+                {
+
+                    <span> |</span>
+                    <a href="javascript:ExcluirUsuario(@item.Id)">Deletar</a>
+                }
+
+            </td>
+        </tr>
+    }
 
 </table>
 
@@ -58,6 +84,6 @@
                 }
             });
 
-        } 
+        }
     }
 </script>
