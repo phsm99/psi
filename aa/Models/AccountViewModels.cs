@@ -55,10 +55,10 @@ namespace aa.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Senha")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Lembrar me?")]
         public bool RememberMe { get; set; }
     }
 
