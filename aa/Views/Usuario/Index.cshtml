@@ -40,7 +40,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr id="usuario_@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
@@ -71,6 +71,19 @@
 </table>
 
 
+<div id="alertasucesso" style="display:none">
+    <div class="alert alert-success" role="alert">
+        Usuário excluido com sucesso!
+    </div>
+</div>
+
+<div id="alertaerro" style="display:none">
+    <div class="alert alert-danger" role="alert">
+        Erro ao excluir usuário!
+    </div>
+</div>
+
+
 
 <script>
     function ExcluirUsuario(UsuarioId) {
@@ -80,7 +93,13 @@
                 url: "/Usuario/DeleteConfirmed/" + UsuarioId,
                 method: "POST",
                 success: function () {
-                    window.location.reload();
+                    $("#usuario_" + UsuarioId).remove();
+                    $('#alertasucesso').show();
+                    setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
+                },
+                error: function () {
+                    $('#alertaerro').show();
+                    setTimeout(function () { $('#alertaerro').hide(); }, 2500);
                 }
             });
 

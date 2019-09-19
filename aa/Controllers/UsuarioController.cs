@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using aa.BD;
+using aa.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using aa.BD;
-using aa.Models;
 
 namespace aa.Controllers
 {
@@ -48,7 +44,7 @@ namespace aa.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( Usuario usuario)
+        public ActionResult Create(Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -112,8 +108,18 @@ namespace aa.Controllers
         [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
+            Usuario usuLogado = null;
+            if (Session["Usuario"] != null)
+            {
+                usuLogado = (Usuario)Session["Usuario"];
+            }
+            if (usuLogado.Id == id)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             Usuario usuario = db.Usuarios.Find(id);
-            if(usuario == null)
+            if (usuario == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
