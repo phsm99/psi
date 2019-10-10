@@ -1,13 +1,11 @@
-﻿using System;
+﻿using aa.BD;
+using aa.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using aa.BD;
-using aa.Models;
 
 namespace aa.Controllers
 {
@@ -40,25 +38,52 @@ namespace aa.Controllers
         // GET: Equipe/Create
         public ActionResult Create()
         {
-            ViewBag.Usuarios = db.Usuarios.ToList();
-            return View();
+            var usu = db.Usuarios.ToList();
+            ViewBag.Usuarios = usu;
+            var model = new EquipeViewModel
+            {
+                // fetch the items from some data source
+
+                UsuariosDisponiveis = usu.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Nome
+                }).ToList()
+            };
+            return View(model);
         }
 
         // POST: Equipe/Create
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Equipe equipe)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create(string nome, string UsuariosId)
         {
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                ModelState.AddModelError("", "Favor insira um valor para o campo nome!");
+            }
+            if (string.IsNullOrWhiteSpace(UsuariosId))
+            {
+                ModelState.AddModelError("", "Favor selecione os usuários para essa equipe!");
+            }
+
             if (ModelState.IsValid)
             {
+
+                Equipe equipe = new Equipe
+                {
+                    Nome = nome,
+                    Usuarios = new List<Usuario>()
+                };
+                UsuariosId.Split(',').ToList().ForEach(x => equipe.Usuarios.Add(db.Usuarios.Find(Convert.ToInt32(x))));
                 db.Equipes.Add(equipe);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(equipe);
+            return View(new JsonResult { Data = "" });
         }
 
         // GET: Equipe/Edit/5
@@ -108,8 +133,9 @@ namespace aa.Controllers
         }
 
         // POST: Equipe/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
             Equipe equipe = db.Equipes.Find(id);

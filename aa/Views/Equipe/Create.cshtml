@@ -1,10 +1,24 @@
-﻿@model aa.Models.Equipe
+﻿@model aa.Models.EquipeViewModel
 @using aa.Models;
 @{
     ViewBag.Title = "Create";
 
     List<Usuario> usuarios = (List<Usuario>)ViewBag.Usuarios;
 }
+
+
+<style>
+    .my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+
 
 <h2>Create</h2>
 
@@ -28,13 +42,59 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Usuarios, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Usuarios, usuarios.Select(x => new SelectListItem { Text = x.Nome, Value = x.Id.ToString() }))
+                @*@Html.DropDownListFor(model => model.Usuarios, usuarios.Select(x => new SelectListItem { Text = x.Nome, Value = x.Id.ToString() }))*@
+
+
+                @*@Html.ListBoxFor(x => x.UsuariosSelecionados, Model.UsuariosDisponiveis)*@
+
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+
+                    <table id="UsuariosSelecionados" name="UsuariosSelecionados" class="table table-bordered table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 1px;"> </th>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var item in Model.UsuariosDisponiveis)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"
+                                                       name="UsuariosSelecionados"
+                                                       value="@item.Value"
+                                                       @if (Model.UsuariosSelecionados.Contains(item.Value)) { <text> checked </text> } />
+                                            </label>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        @item.Text
+                                    </td>
+
+                                </tr>
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" value="Create" onclick="SalvarEquipe()" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -47,3 +107,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
