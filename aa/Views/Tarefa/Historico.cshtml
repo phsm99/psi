@@ -1,0 +1,50 @@
+﻿@model aa.Models.HistoricoViewModel
+
+@{
+    ViewBag.Title = "Historico";
+    Layout = null;
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Usuário Gerenciador
+        </th>
+        <th>
+            Alteração
+        </th>
+        <th>
+            Data Alteração
+        </th>
+        <th>
+            Tipo Alteração
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Registros)
+    {
+        <tr>
+            <td>
+                @item.UsuarioAlterador
+            </td>
+            <td>
+                @{
+                    var alt = item.Alteracao.Split('\n').ToList();
+                    foreach (var substring in alt)
+                    {
+                        @substring;
+                        <br>
+                    }
+
+                }
+            </td>
+            <td>
+                @item.DataAlteracao
+            </td>
+            <td>
+                @item.TipoRegistro
+            </td>
+        </tr>
+    }
+
+</table>

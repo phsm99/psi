@@ -62,8 +62,13 @@ namespace aa.Controllers
             {
                 tarefa.DataCriacao = DateTime.Now;
                 tarefa.DataAlteracao = DateTime.Now;
+                tarefa.Status = Status.NãoAtribuida;
                 db.Tarefas.Add(tarefa);
+
+                HistoricoTarefa historico = new HistoricoTarefa(db);
+                historico.RegistrarAlteracao(TipoAlteracao.Inclusão, tarefa, ((Usuario)Session["Usuario"]).Id);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -98,7 +103,11 @@ namespace aa.Controllers
             {
                 tarefa.DataAlteracao = DateTime.Now;
                 db.Entry(tarefa).State = EntityState.Modified;
+
+                HistoricoTarefa historico = new HistoricoTarefa(db);
+                historico.RegistrarAlteracao(TipoAlteracao.Edição, tarefa, ((Usuario)Session["Usuario"]).Id);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(tarefa);
@@ -143,5 +152,14 @@ namespace aa.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpGet]
+        public ActionResult Historico(int id)
+        {
+            List<HistoricoTarefa> listaHitorico = db.HistoricoTarefas.Where(x => x.TarefaId == id).ToList();
+            HistoricoViewModel histView = new HistoricoViewModel(listaHitorico);
+            return View(histView);
+        }
+
     }
 }

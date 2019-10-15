@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<aa.Models.Tarefa>
-
+@using aa.Classes;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Tarefas";
 }
 
-<h2>Index</h2>
+<h2>Lista de Tarefas</h2>
 
 <p>
     @Html.ActionLink("Criar tarefa", "Create", null, new { @class = "btn btn-primary" })
@@ -18,7 +18,13 @@
             @Html.DisplayNameFor(model => model.Descricao)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataCriacao)
+            @Html.DisplayNameFor(model => model.DataEntrega)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
         </th>
         <th></th>
     </tr>
@@ -32,33 +38,53 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
-            @{
-                string data = item.DataCriacao.ToShortDateString();
-            }
             <td>
-                @Html.DisplayFor(modelItem => data)
+                @item.DataEntrega.ToShortDateString()
+            </td>
+            <td>
+                @{
+                    if (!(item.Usuario == null))
+                    {
+                        @item.Usuario.Nome;
+                    }
+                }
+            </td>
+            <td>
+                @item.Status.GetDisplayName()
             </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
-                <a href="javascript:ExcluirTarefa(@item.Id)">Deletar</a>
+                <a href="javascript:ExcluirTarefa(@item.Id)">Deletar</a> |
+                <a href="javascript:modalHistoricoTarefa(@item.Id)">Histórico</a>
             </td>
         </tr>
     }
 
 </table>
 
-<div id="alertasucesso" style="display:none">
-    <div class="alert alert-success" role="alert">
-        Tarefa excluida com sucesso!
+
+<div class="modal fade bd-example-modal-xl" id="ModalHistorico" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Historico da Tarefa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="infoTarefa">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<div id="alertaerro" style="display:none">
-    <div class="alert alert-danger" role="alert">
-        Erro ao excluir tarefa!
-    </div>
-</div>
 
 
 <script>
@@ -70,11 +96,11 @@
                 method: "POST",
                 success: function () {
                     $("#tarefa_" + TarefaId).remove();
-                    $('#alertasucesso').show();
+                    toastr.success('Tarefa excluida com sucesso!');
                     setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
                 },
                 error: function () {
-                    $('#alertaerro').show();
+                    toastr.error('Erro ao excluir tarefa!');
                     setTimeout(function () { $('#alertaerro').hide(); }, 2500);
                 }
 

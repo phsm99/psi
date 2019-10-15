@@ -39,11 +39,8 @@ namespace aa.Controllers
         public ActionResult Create()
         {
             var usu = db.Usuarios.ToList();
-            ViewBag.Usuarios = usu;
             var model = new EquipeViewModel
             {
-                // fetch the items from some data source
-
                 UsuariosDisponiveis = usu.Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
@@ -83,7 +80,7 @@ namespace aa.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(new JsonResult { Data = "" });
+            return View(new JsonResult { Data = "ERRO INTERNO!!!!!" });
         }
 
         // GET: Equipe/Edit/5
@@ -98,23 +95,54 @@ namespace aa.Controllers
             {
                 return HttpNotFound();
             }
-            return View(equipe);
+
+            var usu = db.Usuarios.ToList();
+            var model = new EquipeViewModel
+            {
+                UsuariosDisponiveis = usu.Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Nome
+                }).ToList()
+            };
+            model.Nome = equipe.Nome;
+            model.UsuariosSelecionados = equipe.Usuarios.Select(x => x.Id.ToString()).ToList();
+
+            return View(model);
         }
 
         // POST: Equipe/Edit/5
         // Para se proteger de mais ataques, ative as propriedades específicas a que você quer se conectar. Para 
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome")] Equipe equipe)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(int equipeId, string nome, string UsuariosId)
         {
             if (ModelState.IsValid)
             {
+                Equipe equipe = db.Equipes.Find(equipeId);
+                if (equipe == null)
+                {
+                    throw new Exception("Equipe não encontrada!");
+                }
+
+                List<Usuario> usuariosSelecionados = new List<Usuario>();
+                UsuariosId.Split(',').ToList().ForEach(x => usuariosSelecionados.Add(db.Usuarios.Find(Convert.ToInt32(x))));
+
+                if (usuariosSelecionados.Count <= equipe.Usuarios.Count)
+                {
+                    equipe.Usuarios = usuariosSelecionados;
+                }
+                else
+                {
+                    equipe.Usuarios = usuariosSelecionados.Concat(equipe.Usuarios).GroupBy(elem => elem.Id).Select(group => group.First()).ToList();
+                }
+
                 db.Entry(equipe).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(equipe);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // GET: Equipe/Delete/5

@@ -1,26 +1,11 @@
 ﻿@model aa.Models.EquipeViewModel
 @using aa.Models;
 @{
-    ViewBag.Title = "Create";
-
-    List<Usuario> usuarios = (List<Usuario>)ViewBag.Usuarios;
+    ViewBag.Title = "Criar";
 }
 
 
-<style>
-    .my-custom-scrollbar {
-        position: relative;
-        height: 200px;
-        overflow: auto;
-    }
-
-    .table-wrapper-scroll-y {
-        display: block;
-    }
-</style>
-
-
-<h2>Create</h2>
+<h2>Criar</h2>
 
 
 @using (Html.BeginForm())
@@ -94,14 +79,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Create" onclick="SalvarEquipe()" class="btn btn-default" />
+                <input type="button" value="Criar Equipe" onclick="SalvarEquipe()" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar a lista", "Index")
 </div>
 
 @section Scripts {

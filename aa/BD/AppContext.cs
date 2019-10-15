@@ -19,12 +19,19 @@ namespace aa.BD
         public DbSet<Tarefa> Tarefas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Equipe> Equipes { get; set; }
+        public DbSet<HistoricoTarefa> HistoricoTarefas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Properties<DateTime>()
                 .Configure(c => c.HasColumnType("datetime2"));
+
+            modelBuilder.Entity<Tarefa>()
+                .HasMany<HistoricoTarefa>(c => c.Historicos)
+                .WithOptional(x => x.Tarefa)
+                .WillCascadeOnDelete(true);
+
         }
 
     }

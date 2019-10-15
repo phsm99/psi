@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<aa.Models.Equipe>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Equipes";
     aa.Models.Usuario usuario = null;
     if (Session["Usuario"] != null)
     {
@@ -9,10 +9,10 @@
     }
 }
 
-<h2>Index</h2>
+<h2>Lista de Equipes</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Criar equipe", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -29,11 +29,10 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
                 @if (usuario != null && usuario.Cargo == aa.Models.Usuario.Tipo.Lider)
                 {
-                    <span> |</span>
                     <a href="javascript:ExcluirEquipe(@item.Id)">Deletar</a>
                 }
 
@@ -42,22 +41,6 @@
     }
 
 </table>
-
-
-
-<div id="alertasucesso" style="display:none">
-    <div class="alert alert-success" role="alert">
-        Equipe excluida com sucesso!
-    </div>
-</div>
-
-<div id="alertaerro" style="display:none">
-    <div class="alert alert-danger" role="alert">
-        Erro ao excluir equipe!
-    </div>
-</div>
-
-
 
 <script>
     function ExcluirEquipe(EquipeId) {
@@ -68,11 +51,11 @@
                 method: "POST",
                 success: function () {
                     $("#equipe_" + EquipeId).remove();
-                    $('#alertasucesso').show();
+                    toastr.error('Equipe excluida com sucesso!');                    
                     setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
                 },
                 error: function () {
-                    $('#alertaerro').show();
+                    toastr.error('Erro ao excluir equipe!');
                     setTimeout(function () { $('#alertaerro').hide(); }, 2500);
                 }
             });

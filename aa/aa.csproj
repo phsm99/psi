@@ -185,6 +185,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BD\AppContext.cs" />
     <Compile Include="BD\AppInitializer.cs" />
+    <Compile Include="Classes\ExtensionMethods.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\EquipeController.cs" />
@@ -203,6 +205,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Equipe.cs" />
     <Compile Include="Models\EquipeViewModel.cs" />
+    <Compile Include="Models\HistoricoTarefa.cs" />
+    <Compile Include="Models\HistoricoViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tarefa.cs" />
@@ -217,12 +221,16 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\App.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -235,6 +243,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -285,6 +295,7 @@
     <Content Include="Views\Equipe\Details.cshtml" />
     <Content Include="Views\Equipe\Edit.cshtml" />
     <Content Include="Views\Equipe\Index.cshtml" />
+    <Content Include="Views\Tarefa\Historico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908122249040_InitialCreate.resx">

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<aa.Models.Usuario>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista de Usuários";
     aa.Models.Usuario usuario = null;
     if (Session["Usuario"] != null)
     {
@@ -12,7 +12,7 @@
 
 
 
-<h2>Index</h2>
+<h2>Lista de Usuários</h2>
 
 @if (usuario != null && usuario.Cargo == aa.Models.Usuario.Tipo.Lider)
 {
@@ -70,21 +70,6 @@
 
 </table>
 
-
-<div id="alertasucesso" style="display:none">
-    <div class="alert alert-success" role="alert">
-        Usuário excluido com sucesso!
-    </div>
-</div>
-
-<div id="alertaerro" style="display:none">
-    <div class="alert alert-danger" role="alert">
-        Erro ao excluir usuário!
-    </div>
-</div>
-
-
-
 <script>
     function ExcluirUsuario(UsuarioId) {
         var r = confirm("Deseja realmente excluir esse usuário?");
@@ -94,11 +79,11 @@
                 method: "POST",
                 success: function () {
                     $("#usuario_" + UsuarioId).remove();
-                    $('#alertasucesso').show();
+                    toastr.success('Usuário excluido com sucesso!');
                     setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
                 },
                 error: function () {
-                    $('#alertaerro').show();
+                    toastr.error('Erro ao excluir usuário!');
                     setTimeout(function () { $('#alertaerro').hide(); }, 2500);
                 }
             });
