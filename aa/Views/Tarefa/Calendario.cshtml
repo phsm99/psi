@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Calendario";
+}
+
+<h2>Calendario</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="calendar">
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                theme: true,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+
+                defaultView: 'agendaDay',
+                editable: true,
+                allDaySlot: false,
+                selectable: true,
+                slotMinutes: 15,
+                events: "/home/getevents/"
+            });
+        });
+    </script>
+
+}
+

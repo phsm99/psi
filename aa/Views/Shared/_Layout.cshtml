@@ -37,6 +37,7 @@
                         <li>@Html.ActionLink("Tarefa", "Index", "Tarefa")</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Usuario")</li>
                         <li>@Html.ActionLink("Equipe", "Index", "Equipe")</li>
+                        <li>@Html.ActionLink("calenadrio", "Calendario", "Tarefa")</li>
                     </ul>
                     @*@Html.Partial("_LoginPartial")*@
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -69,5 +70,12 @@
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/toastr.js"></script>
     @Scripts.Render("~/bundles/App")
+
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+    <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+
+
 </body>
 </html>
