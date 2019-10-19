@@ -51,7 +51,7 @@
                 method: "POST",
                 success: function () {
                     $("#equipe_" + EquipeId).remove();
-                    toastr.error('Equipe excluida com sucesso!');                    
+                    toastr.success('Equipe excluida com sucesso!');                    
                     setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
                 },
                 error: function () {

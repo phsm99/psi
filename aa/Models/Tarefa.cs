@@ -31,7 +31,7 @@ namespace aa.Models
 
         [DisplayName("Data de Entrega")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DataEntrega { get; set; }
 
         [DisplayName("Responsável")]
