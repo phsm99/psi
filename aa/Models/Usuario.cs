@@ -27,5 +27,6 @@ namespace aa.Models
         [Required]
         public Tipo Cargo { get; set; }
         public virtual ICollection<Equipe> Equipes { get; set; }
+        public virtual ICollection<Projeto> Projetos { get; set; }
     }
 }

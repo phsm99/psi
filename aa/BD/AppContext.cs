@@ -20,6 +20,7 @@ namespace aa.BD
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Equipe> Equipes { get; set; }
         public DbSet<HistoricoTarefa> HistoricoTarefas { get; set; }
+        public DbSet<Projeto> Projetos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
