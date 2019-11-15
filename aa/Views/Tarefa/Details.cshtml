@@ -1,5 +1,5 @@
 ﻿@model aa.Models.Tarefa
-
+@using aa.Classes;
 @{
     ViewBag.Title = "Detalhes";
 }
@@ -37,12 +37,34 @@
             @Html.DisplayFor(model => data)
         </dd>
 
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEntrega)
+        </dt>
+
+        @{
+            data = Model.DataEntrega.ToShortDateString();
+        }
+        <dd>
+            @Html.DisplayFor(model => data)
+        </dd>
+
+
         <dt>
             @Html.DisplayNameFor(model => model.Usuario)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Usuario.Nome)
         </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Model.Status.GetDisplayName()
+        </dd>
+
 
     </dl>
 </div>
