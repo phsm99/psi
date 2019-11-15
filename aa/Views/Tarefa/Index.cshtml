@@ -87,26 +87,3 @@
 
 
 
-<script>
-    function ExcluirTarefa(TarefaId) {
-        var r = confirm("Deseja realmente excluir essa tarefa?");
-        if (r == true) {
-            $.ajax({
-                url: "/Tarefa/DeleteConfirmed/" + TarefaId,
-                method: "POST",
-                success: function () {
-                    $("#tarefa_" + TarefaId).remove();
-                    toastr.success('Tarefa excluida com sucesso!');
-                    setTimeout(function () { $('#alertasucesso').hide(); }, 2500);
-                },
-                error: function () {
-                    toastr.error('Erro ao excluir tarefa!');
-                    setTimeout(function () { $('#alertaerro').hide(); }, 2500);
-                }
-
-
-            });
-
-        }
-    }
-</script>

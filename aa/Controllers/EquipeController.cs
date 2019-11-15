@@ -57,13 +57,20 @@ namespace aa.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(string nome, string UsuariosId)
         {
+            string erro = "";
             if (string.IsNullOrWhiteSpace(nome))
             {
-                ModelState.AddModelError("", "Favor insira um valor para o campo nome!");
+                erro += "Favor insira um valor para o campo nome!";
             }
+
             if (string.IsNullOrWhiteSpace(UsuariosId))
             {
-                ModelState.AddModelError("", "Favor selecione os usuários para essa equipe!");
+                erro += "\nFavor selecione os usuários para essa equipe!";
+            }
+
+            if (!string.IsNullOrWhiteSpace(erro))
+            {
+                ModelState.AddModelError("", erro);
             }
 
             if (ModelState.IsValid)
@@ -80,7 +87,7 @@ namespace aa.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(new JsonResult { Data = "ERRO INTERNO!!!!!" });
+            return Json(new { Data = erro });
         }
 
         // GET: Equipe/Edit/5
@@ -118,6 +125,22 @@ namespace aa.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(int equipeId, string nome, string UsuariosId)
         {
+            string erro = "";
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                erro += "Favor insira um valor para o campo nome!";
+            }
+
+            if (string.IsNullOrWhiteSpace(UsuariosId))
+            {
+                erro += "\nFavor selecione os usuários para essa equipe!";
+            }
+
+            if (!string.IsNullOrWhiteSpace(erro))
+            {
+                ModelState.AddModelError("", erro);
+            }
+
             if (ModelState.IsValid)
             {
                 Equipe equipe = db.Equipes.Find(equipeId);
@@ -125,6 +148,8 @@ namespace aa.Controllers
                 {
                     throw new Exception("Equipe não encontrada!");
                 }
+
+                equipe.Nome = nome;
 
                 List<Usuario> usuariosSelecionados = new List<Usuario>();
                 UsuariosId.Split(',').ToList().ForEach(x => usuariosSelecionados.Add(db.Usuarios.Find(Convert.ToInt32(x))));
@@ -142,7 +167,7 @@ namespace aa.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            return Json(new { Data = erro });
         }
 
         // GET: Equipe/Delete/5
