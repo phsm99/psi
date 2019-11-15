@@ -28,6 +28,7 @@ namespace aa
 
             bundles.Add(new ScriptBundle("~/bundles/App").Include(
                         "~/Scripts/App.js"));
+
         }
     }
 }
