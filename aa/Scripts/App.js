@@ -152,7 +152,7 @@ function SalvarProjeto() {
             }
         },
         error: function (e) {
-            toastr.error(e,"Erro interno!");
+            toastr.error(e, "Erro interno!");
         }
     });
 }
@@ -211,5 +211,3 @@ function ExcluirProjeto(ProjetoId) {
 
     }
 }
-
-

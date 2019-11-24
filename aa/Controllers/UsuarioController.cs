@@ -76,7 +76,7 @@ namespace aa.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Sobrenome")] Usuario usuario)
+        public ActionResult Edit( Usuario usuario)
         {
             if (ModelState.IsValid)
             {

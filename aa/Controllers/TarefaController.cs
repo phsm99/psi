@@ -9,6 +9,14 @@ using System.Web.Mvc;
 
 namespace aa.Controllers
 {
+    struct TarefaJson
+    {
+        public string Title;
+        public string Desc;
+        public string Start_Date;
+        public string End_Date;
+
+    }
     [RedirectingAction]
     public class TarefaController : Controller
     {
@@ -161,5 +169,39 @@ namespace aa.Controllers
             return View(histView);
         }
 
+       
+
+        [HttpGet]
+        public ActionResult ObterTarefasCalendario(string data = null)
+        {
+            JsonResult result = new JsonResult();
+            List<Tarefa> tarefas = new List<Tarefa>();
+            if (data == null)
+            {
+                tarefas = db.Tarefas.ToList();
+            }
+            else
+            {
+                var dataConvert = Convert.ToDateTime(data);
+                tarefas = db.Tarefas.Where(x => x.DataEntrega.Month.Equals(dataConvert.Month)).ToList();
+            }
+            List<TarefaJson> tarefaJsons = new List<TarefaJson>();
+
+            tarefas.ForEach(x =>
+                tarefaJsons.Add(new TarefaJson
+                {
+                    Title = x.Titulo,
+                    Desc = x.Descricao,
+                    Start_Date = x.DataEntrega.ToString("yyyy-MM-dd"),
+                    End_Date = x.DataEntrega.ToString("yyyy-MM-dd")
+                })
+            );
+
+            result = Json(tarefaJsons, JsonRequestBehavior.AllowGet);
+            return result;
+        }
+
+
     }
+
 }

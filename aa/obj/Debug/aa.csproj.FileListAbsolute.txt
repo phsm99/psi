@@ -289,10 +289,10 @@ C:\Users\PEDRO\source\Repos\phsm99\psi\aa\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.csprojAssemblyReference.cache
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.Migrations.InitialCreate.resources
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.csproj.GenerateResource.cache
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.csproj.CoreCompileInputs.cache
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.csproj.CopyComplete
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.dll
 C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.pdb
+C:\Users\PEDRO\source\Repos\phsm99\psi\aa\obj\Debug\aa.csprojAssemblyReference.cache
