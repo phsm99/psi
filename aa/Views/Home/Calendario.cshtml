@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Calendario";
+    ViewBag.Title = "Calendário";
 }
 
-<h2>Calendario</h2>
+<h2>Calendário</h2>
 
 
 <div class="row">
@@ -16,3 +16,75 @@
         </div><!-- /. box -->
     </div><!-- /.col -->
 </div>
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+
+            header:
+            {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            buttonText: {
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana'
+            },
+            changeView: 'agendaDay',
+
+            events: function (start, end, timezone, callback) {
+                $.ajax({
+                    url: `/Tarefa/ObterTarefasCalendario`,
+                    type: "GET",
+                    dataType: "JSON",
+
+                    success: function (result) {
+                        var events = [];
+
+                        $.each(result, function (i, data) {
+                            events.push(
+                                {
+                                    title: data.Title,
+                                    description: data.Desc,
+                                    start: data.Start_Date,
+                                    end: data.End_Date,
+                                    backgroundColor: "#9501fc",
+                                    borderColor: "#fc0101"
+                                });
+                        });
+
+                        callback(events);
+                    }
+                });
+            },
+
+            eventRender: function (event, element) {
+                element.attr("data-toggle", "tooltip");
+                element.attr("data-placement", "top");
+                element.attr("title", event.description);
+
+
+                if (window.location.pathname === '/') {
+                    $('#calendar').fullCalendar('changeView', 'agendaDay');
+                    $('.fc-toolbar').remove();
+                }
+                $('.fc-time-grid-container').remove();
+            },
+
+            editable: false
+        });
+    });
+
+
+    $(document).ready(function () {
+
+    });
+
+</script>
