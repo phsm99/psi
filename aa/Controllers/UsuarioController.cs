@@ -1,5 +1,6 @@
 ﻿using aa.BD;
 using aa.Models;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -30,12 +31,21 @@ namespace aa.Controllers
             {
                 return HttpNotFound();
             }
+            if (usuario.ResponsavelId != 0)
+            {
+                ViewBag.Responsavel = db.Usuarios.Find(usuario.ResponsavelId).Nome;
+            }
+
             return View(usuario);
         }
 
         // GET: Usuario/Create
         public ActionResult Create()
         {
+            List<SelectListItem> lista = new List<SelectListItem>();
+            List<Usuario> usu = db.Usuarios.ToList();
+            usu.ForEach(x => lista.Add(new SelectListItem { Value = x.Id.ToString(), Text = x.Nome }));
+            ViewBag.Responsaveis = lista;
             return View();
         }
 
@@ -46,6 +56,7 @@ namespace aa.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuario usuario)
         {
+
             if (ModelState.IsValid)
             {
                 db.Usuarios.Add(usuario);
@@ -68,6 +79,24 @@ namespace aa.Controllers
             {
                 return HttpNotFound();
             }
+
+            List<SelectListItem> lista = new List<SelectListItem>();
+            List<Usuario> usu = db.Usuarios.ToList();
+            foreach (var item in usu)
+            {
+                if (item.Id == usuario.ResponsavelId)
+                {
+                    lista.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Nome, Selected = true });
+                }
+                else
+                {
+                    lista.Add(new SelectListItem { Value = item.Id.ToString(), Text = item.Nome });
+                }
+            }
+            lista.RemoveAt(lista.FindIndex(x => x.Value.Equals(id.ToString())));
+            ViewBag.Responsaveis = lista;
+
+
             return View(usuario);
         }
 
@@ -76,8 +105,12 @@ namespace aa.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Usuario usuario)
+        public ActionResult Edit(Usuario usuario)
         {
+            if (usuario.ResponsavelId == usuario.Id)
+            {
+                ModelState.AddModelError("", "Não é possível vincular a si mesmo como responsável!!");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(usuario).State = EntityState.Modified;

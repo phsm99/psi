@@ -27,8 +27,20 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.ResponsavelId)
+        </dt>
+
+        <dd>
+            @if (ViewBag.Responsavel != null)
+            {
+                @ViewBag.Responsavel
+            }
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Tarefas)
         </dt>
+
 
         @foreach (var tar in Model.Tarefas)
         {
